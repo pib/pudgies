@@ -1,0 +1,5 @@
+These tests can be run with nosetests by running
+
+    nosetests -c .noserc
+
+from the root pudgies directory.

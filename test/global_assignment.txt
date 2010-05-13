@@ -1,0 +1,33 @@
+    >>> from pudgies import *
+
+Simple assignment.
+
+    >>> ast = js_to_ast("var foo = 'bar';")
+    >>> dump(ast)
+    Module([Assign([Name('foo', Store())], Str('bar'))])
+    >>> mod = ast_to_mod('mod', ast)
+    >>> mod
+    <module 'mod' from '<string>'>
+    >>> mod.foo
+    'bar'
+    >>> del mod, ast
+
+
+Multiple assignments, separated with commas.
+
+    >>> ast = js_to_ast("var foo = 'baz', bar=42")
+    >>> dump(ast)
+    Module([Assign([Name('foo', Store())], Str('baz')), Assign([Name('bar', Store())], Num(42))])
+    >>> mod = ast_to_mod('mod', ast)
+    >>> mod.foo
+    'baz'
+    >>> mod.bar
+    42
+    >>> del mod, ast
+
+
+Assigning the same value to multiple names.
+
+    >>> ast = js_to_ast("var foo = bar = 'baz'")
+    >>> dump(ast)
+    Module([Assign([Name('foo', Store()), Name('bar', Store())], Str('baz'))])
