@@ -1,4 +1,5 @@
 import imp
+import jslib
 from transforms import js_to_ast
 
 
@@ -6,7 +7,8 @@ def ast_to_mod(name, tree, filename='<string>'):
     code = compile(tree, filename, 'exec')
     mod = imp.new_module(name)
     mod.__file__ = filename
-    exec code in globals(), mod.__dict__
+    globs = {'jslib': jslib}
+    exec code in globs, mod.__dict__
     return mod
 
 

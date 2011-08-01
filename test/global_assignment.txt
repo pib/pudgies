@@ -1,4 +1,4 @@
-    >>> from pudgies import *
+    >>> from pudgies import ast_to_mod, js_to_ast, dump
 
 Simple assignment.
 
@@ -30,4 +30,12 @@ Assigning the same value to multiple names.
 
     >>> ast = js_to_ast("var foo = bar = 'baz'")
     >>> dump(ast)
-    Module([Assign([Name('foo', Store()), Name('bar', Store())], Str('baz'))])
+    Module([Assign([Name('foo', Store())], Call(Attribute(Name('jslib', Load()), 'assignment_expression', Load()), [Call(Name('locals', Load()), [], [], None, None), Str('bar'), Str('baz')], [], None, None))])
+    >>> mod = ast_to_mod('mod', ast)
+    >>> mod.foo
+    'baz'
+    >>> mod.bar
+    'baz'
+    >>> mod.foo is mod.bar
+    True
+    >>> del mod, ast
